@@ -6,7 +6,7 @@
     <title>桜塚高校第28期同期会ページ</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 読み込み完了まで非表示にして強制スクロールさせる */
+        /* 読み込み完了まで非表示にしてジャンプを防ぐ */
         body { opacity: 0; }
         html { scroll-behavior: auto !important; }
 
@@ -36,13 +36,13 @@
         }
         .header-title { color: #ffffff; font-size: 2.4em; margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: 0.08em; }
 
-        /* ★控えめなタイムマシンメッセージのデザイン★ */
+        /* ★タイムマシンメッセージ：行間を詰め、より控えめに★ */
         .time-machine-msg {
-            margin: 0 auto 30px auto; padding: 10px; max-width: 90%;
+            margin: 0 auto 25px auto; padding: 0; max-width: 90%;
             text-align: center; color: #888;
         }
-        .msg-icons { font-size: 18px; margin-bottom: 8px; letter-spacing: 5px; opacity: 0.7; }
-        .msg-text { font-size: 13px; font-weight: 400; line-height: 1.6; }
+        .msg-icons { font-size: 16px; margin-bottom: 3px; letter-spacing: 4px; opacity: 0.6; }
+        .msg-text { font-size: 12.5px; font-weight: 400; line-height: 1.4; letter-spacing: 0.02em; }
 
         .contents-index {
             margin: 10px auto 40px auto; padding: 25px; max-width: 90%;
@@ -52,12 +52,14 @@
         .contents-index a { color: #555; text-decoration: none; font-size: 15px; font-weight: 700; display: block; }
         .contents-index a::before { content: "🌸 "; }
 
-        .section-header { text-align: center; margin: 60px 0 30px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .section-header { text-align: center; margin: 60px 0 30px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; scroll-margin-top: 20px; }
         .oval-title {
             display: inline-block; padding: 15px 30px; border: 2px solid #ffb7c5;
             border-radius: 60px; background-color: #fff; color: #ff8da1;
             font-weight: 700; font-size: 16px; line-height: 1.5;
         }
+        .back-to-index { background-color: #fff; color: #d65f82; border: 2px solid #ffb7c5; padding: 8px 15px; border-radius: 30px; font-size: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s; white-space: nowrap; }
+        .back-to-index:hover { background-color: #ffb7c5; color: #fff; }
         .howto-link-btn { font-size: 14px; color: #d65f82; text-decoration: underline; font-weight: 700; }
 
         .video-list { list-style: none; padding: 0; margin-bottom: 45px; }
@@ -70,12 +72,13 @@
         .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .video-no { font-weight: 700; color: #d65f82; font-size: 1.2em; width: 45px; text-align: center; }
         .video-info { flex-grow: 1; }
-        .video-time { font-size: 0.8em; color: #888; display: block; }
         .video-title { font-weight: 700; font-size: 1em; color: #333; }
         .play-btn { display: inline-block; background-color: #ff8da1; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; font-weight: 700; font-size: 12px; }
 
         .howto-box { background-color: rgba(253, 253, 253, 0.95); border: 2px solid #ffeef5; border-radius: 20px; padding: 30px; margin-top: 60px; text-align: left; scroll-margin-top: 20px; }
-        .step-num { background: #87ceeb; color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-block; text-align: center; line-height: 28px; margin-right: 12px; font-weight: 700; }
+        .howto-box h2 { font-size: 20px; color: #555; border-left: 6px solid #87ceeb; padding-left: 12px; margin-bottom: 25px; }
+        .howto-step { display: flex; margin-bottom: 20px; }
+        .step-num { background: #87ceeb; color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-block; text-align: center; line-height: 28px; margin-right: 12px; font-weight: 700; flex-shrink: 0; }
 
         footer { text-align: center; margin-top: 70px; font-size: 12px; color: #999; }
 
@@ -83,6 +86,7 @@
             .header-title { font-size: 1.6em; }
             .video-thumb { width: 90px; height: 60px; }
             .video-no { width: 35px; }
+            .oval-title { font-size: 14px; padding: 12px 20px; }
         }
     </style>
 </head>
@@ -96,7 +100,7 @@
         <h1 class="header-title">桜塚高校第28期同期会ページ</h1>
     </header>
 
-    <nav class="contents-index">
+    <nav id="top-index" class="contents-index">
         <h2>目次一覧</h2>
         <ul>
             <li><a href="#section1">2023年 同期会 360°動画アーカイブ</a></li>
@@ -107,9 +111,12 @@
     </nav>
 
     <div id="section1" class="section-header">
-        <div class="oval-title">
-            2023年 9月 23日（日） 桜塚高校第28期 同期会<br>
-            於 梅田 リストランテ・クロノス 360°動画 アーカイブ
+        <div class="oval-wrapper">
+            <div class="oval-title">
+                2023年 9月 23日（日） 桜塚高校第28期 同期会<br>
+                於 梅田 リストランテ・クロノス 360°動画 アーカイブ
+            </div>
+            <a href="#top-index" class="back-to-index">↑ 目次へ</a>
         </div>
         <a href="#howto" class="howto-link-btn">▼ 360°動画の楽しみ方はこちら</a>
     </div>
@@ -148,26 +155,41 @@
                 {no:"21", title:"二次会場1", time:"16:26〜", url:"https://www.youtube.com/watch?v=hbPB4Rtb038"}
             ];
             v1.forEach(v => {
-                document.write(`<li class="video-item"><div class="video-thumb"><img src="thumb_${v.no}.jpg"></div><div class="video-no">${v.no}</div><div class="video-info"><span class="video-time">${v.time}</span><span class="video-title">${v.title}</span></div><a href="${v.url}" class="play-btn" target="_blank">再生</a></li>`);
+                document.write(`<li class="video-item"><div class="video-thumb"><img src="thumb_${v.no}.jpg"></div><div class="video-no">${v.no}</div><div class="video-info"><span style="font-size:0.8em;color:#888;">${v.time}</span><br><span class="video-title">${v.title}</span></div><a href="${v.url}" class="play-btn" target="_blank">再生</a></li>`);
             });
         </script>
     </ul>
 
-    <div id="section2" class="section-header"><div class="oval-title">2023年 同期会 写真集</div></div>
+    <div id="section2" class="section-header">
+        <div class="oval-wrapper">
+            <div class="oval-title">2023年 9月 23日（日） 同期会 写真集</div>
+            <a href="#top-index" class="back-to-index">↑ 目次へ</a>
+        </div>
+    </div>
     <ul class="video-list">
         <li class="video-item"><div class="video-thumb"><img src="2023年9月23日 入学5０周年記念(集合写真)3枚.jpg"></div><div class="video-no">02a</div><div class="video-info"><span class="video-title">入学5０周年記念(集合写真)3枚</span></div><a href="https://photos.google.com/share/AF1QipNXWpVB1wtwLVmoQKd1wiL7hlu9QoVPzzA6XRVGvUxyqAvj7EXtBiWe3StDEq_66Q?key=Q1NraHhZZGE1MGVBUUZXR3JPQVdLU21MbXR6X0p3" class="play-btn" target="_blank">閲覧</a></li>
         <li class="video-item"><div class="video-thumb"><img src="2023年9月23日 入学5０周年記念(開演～閉幕までの写真)221枚.jpg"></div><div class="video-no">02b</div><div class="video-info"><span class="video-title">入学5０周年記念(開演～閉幕までの写真)221枚</span></div><a href="https://photos.google.com/share/AF1QipOsnKd7VXhJz79Cq8wl_S0jaPJN1LNg8-T93k5b_pkGitldHA1M1RMx9PRflHRD1w?key=c3hDSHJSMFRpa09RTS1ISEpIWkV0RHZfbHA4X3NR" class="play-btn" target="_blank">閲覧</a></li>
         <li class="video-item"><div class="video-thumb"><img src="2023年9月23日 入学5０周年記念(★写真投稿用).jpg"></div><div class="video-no">02c</div><div class="video-info"><span class="video-title">入学5０周年記念(★写真投稿用)</span></div><a href="https://photos.google.com/share/AF1QipMJYHLWBKfYQsFp1YFy3hGkbgT3sLxImIwIOULbwddzf_WNrv6_Q_9gdg6Nd-S8KQ?key=dF9Vb252ZExJbEtIN0QxUmlKcHRUU2V0emhQWFJR" class="play-btn" target="_blank">閲覧</a></li>
     </ul>
 
-    <div id="section3" class="section-header"><div class="oval-title">2018年 還暦同期会（千里阪急ホテル）</div></div>
+    <div id="section3" class="section-header">
+        <div class="oval-wrapper">
+            <div class="oval-title">2018年 4月 28日 還暦同期会（千里阪急ホテル）</div>
+            <a href="#top-index" class="back-to-index">↑ 目次へ</a>
+        </div>
+    </div>
     <ul class="video-list">
         <li class="video-item"><div class="video-thumb"><img src="2018年4月28日 還暦同期会写真(千里阪急ホテル)211枚.jpg"></div><div class="video-no">08</div><div class="video-info"><span class="video-title">還暦同期会写真 211枚</span></div><a href="https://photos.google.com/share/AF1QipPd0oXTi8rxDRzyGjlQTJRIzoJYmCkkbLnPweTdGR1wj7xGQdMzRP5wUacBp5rYDw?key=dlJKTTJOZm9PRW5ORVprU043SW9OdEV5NUpUdVVB" class="play-btn" target="_blank">閲覧</a></li>
         <li class="video-item"><div class="video-thumb"><img src="2018年4月28日 還暦同期会(★写真投稿用).jpg"></div><div class="video-no">09</div><div class="video-info"><span class="video-title">還暦同期会(★写真投稿用)</span></div><a href="https://photos.google.com/share/AF1QipNWjKOAW37aLgpM8cYMiVyFFNluQ1oLh9O2Tq_4rRecVJf3hU4NLjsUm0hNnKvAhQ?key=OWU2ck5JeGJtaTUyeks0RTR2d1AwZVVXQmlOcUNR" class="play-btn" target="_blank">閲覧</a></li>
         <li class="video-item"><div class="video-thumb"><img src="2018年4月28日 還暦同期会 動画 12本.jpg"></div><div class="video-no">10</div><div class="video-info"><span class="video-title">還暦同期会 動画 12本</span></div><a href="https://photos.google.com/share/AF1QipNBlLjXYrJGCuXU8hJr645hPFw53uYycvRoJ808PLGRM-9rkJyE2wjDCJUSHrSIwA?key=SHpjQW8xRlZPOE5mQ19PVGljaVZRS0pGUlZjVVB3" class="play-btn" target="_blank">閲覧</a></li>
     </ul>
 
-    <div id="section4" class="section-header"><div class="oval-title">特別付録：資料アーカイブ</div></div>
+    <div id="section4" class="section-header">
+        <div class="oval-wrapper">
+            <div class="oval-title">特別付録：資料アーカイブ</div>
+            <a href="#top-index" class="back-to-index">↑ 目次へ</a>
+        </div>
+    </div>
     <ul class="video-list">
         <script>
             const v4 = [
@@ -187,9 +209,25 @@
 
     <div id="howto" class="howto-box">
         <h2>📱 360°動画の楽しみ方（スマホ・iPhone）</h2>
-        <div class="howto-step"><div class="step-num">1</div><div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。</div></div>
-        <div class="howto-step"><div class="step-num">2</div><div><strong>スマホを動かしてみる</strong><br>スマホを動かすと、視点が変わります。</div></div>
-        <div class="howto-step"><div class="step-num">3</div><div><strong>画質を上げる</strong><br>設定から「画質」→「高い画質」を選んでください。</div></div>
+        <p style="margin-bottom:25px; font-size:15px; color:#666;">
+            このサイトの動画は、会場をぐるりと見渡せる360度カメラで撮影されています。<br>
+            まるでその場にいるような臨場感をお楽しみください。
+        </p>
+        <div class="howto-step">
+            <div class="step-num">1</div>
+            <div><strong>「動画を見る」ボタンを押す</strong><br>YouTubeアプリが起動します。（ブラウザで開いた場合は、アプリで開くように選択してください）</div>
+        </div>
+        <div class="howto-step">
+            <div class="step-num">2</div>
+            <div><strong>スマホを動かしてみる</strong><br>スマホを上下左右に動かすと、それに合わせて映像のアングルが変わります。<br>または、画面を指でスワイプ（なぞる）しても視点を変更できます。</div>
+        </div>
+        <div class="howto-step">
+            <div class="step-num">3</div>
+            <div><strong>画質を上げる（おすすめ）</strong><br>画面右上の歯車マーク⚙️から「画質」→「高い画質」を選ぶと、より鮮明な映像で同期会の様子を楽しめます。</div>
+        </div>
+        <div style="text-align:center; margin-top:30px;">
+            <a href="#top-index" class="back-to-index">↑ 目次へ戻る</a>
+        </div>
     </div>
 
     <footer><p>© 2026 桜塚高校28期 同窓会実行委員会</p></footer>
@@ -204,6 +242,7 @@
         setTimeout(() => {
             window.scrollTo(0, 0);
             document.body.style.opacity = "1";
+            document.getElementById('page-top').focus();
         }, 50);
     });
 
