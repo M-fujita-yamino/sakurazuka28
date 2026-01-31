@@ -6,9 +6,10 @@
     <title>桜塚高校第28期同期会ページ</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ブラウザの自動スクロール復元によるズレを防止 */
-        html { scroll-behavior: auto !important; } 
-        
+        /* ★改善: 読み込み完了まで画面を隠す */
+        body { opacity: 0; transition: opacity 0.3s ease; }
+        html { scroll-behavior: auto !important; }
+
         body {
             font-family: 'Zen Maru Gothic', "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
             background-color: #ffeef5;
@@ -39,15 +40,22 @@
 
         header { 
             text-align: center; padding: 45px 15px; margin: -20px -20px 30px -20px;
-            background-color: #a51d4d; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
-            /* 開始位置を特定するためのフォーカス設定 */
+            background-color: #a51d4d; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
             outline: none;
         }
         .header-title { color: #ffffff; font-size: 2.4em; margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: 0.08em; }
 
+        /* 追加：メッセージ画像用スタイル */
+        .message-card {
+            width: 100%; max-width: 600px; margin: 0 auto 30px auto;
+            display: block; border-radius: 15px;
+        }
+
         .contents-index {
             margin: 10px auto 40px auto; padding: 25px; max-width: 90%;
             background: #fff; border: 2px dashed #ffb7c5; border-radius: 25px; text-align: left;
+            scroll-margin-top: 20px;
         }
         .contents-index h2 { font-size: 18px; color: #d65f82; margin-top: 0; border-bottom: 2px solid #ffeef5; padding-bottom: 5px; }
         .contents-index ul { list-style: none; padding: 0; margin: 0; }
@@ -55,7 +63,7 @@
         .contents-index a { color: #555; text-decoration: none; font-size: 15px; font-weight: 700; display: block; }
         .contents-index a::before { content: "🌸 "; font-size: 0.9em; }
 
-        .section-header { text-align: center; margin: 60px 0 30px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .section-header { text-align: center; margin: 60px 0 30px 0; scroll-margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .oval-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
         .oval-title {
             display: inline-block; padding: 15px 30px; border: 2px solid #ffb7c5;
@@ -65,13 +73,15 @@
         }
         .back-to-index { background-color: #fff; color: #d65f82; border: 2px solid #ffb7c5; padding: 8px 15px; border-radius: 30px; font-size: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s; white-space: nowrap; }
         .back-to-index:hover { background-color: #ffb7c5; color: #fff; }
+        .howto-link-btn { font-size: 14px; color: #d65f82; text-decoration: underline; cursor: pointer; font-weight: 700; }
 
         .video-list { list-style: none; padding: 0; margin-bottom: 45px; }
         .video-item {
             display: flex; align-items: center; background: #fff; margin-bottom: 12px;
             padding: 12px; border-radius: 18px; border-left: 8px solid #ffb7c5;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.05); gap: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05); transition: transform 0.2s; gap: 15px;
         }
+        .video-item:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255, 182, 193, 0.3); }
         .video-thumb { width: 110px; height: 70px; flex-shrink: 0; border-radius: 12px; overflow: hidden; border: 1px solid #eee; background-color: #f0f0f0; }
         .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .video-no { font-weight: 700; color: #d65f82; font-size: 1.2em; width: 45px; flex-shrink: 0; text-align: center; }
@@ -81,10 +91,10 @@
         .play-btn { display: inline-block; background-color: #ff8da1; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; font-weight: 700; font-size: 12px; white-space: nowrap; }
 
         .bgm-controller { position: fixed; top: 15px; right: 15px; z-index: 100; display: flex; flex-direction: column; gap: 8px; }
-        .bgm-btn { background-color: #d65f82; color: white; border: none; border-radius: 50px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .bgm-btn { background-color: #d65f82; color: white; border: none; border-radius: 50px; padding: 10px 18px; font-size: 13px; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.15); cursor: pointer; }
         .bgm-btn.playing { background-color: #4CAF50; }
 
-        .howto-box { background-color: rgba(253, 253, 253, 0.95); border: 2px solid #ffeef5; border-radius: 20px; padding: 30px; margin-top: 60px; text-align: left; }
+        .howto-box { background-color: rgba(253, 253, 253, 0.95); border: 2px solid #ffeef5; border-radius: 20px; padding: 30px; margin-top: 60px; scroll-margin-top: 20px; text-align: left; }
         .howto-box h2 { font-size: 20px; color: #555; border-left: 6px solid #87ceeb; padding-left: 12px; margin-bottom: 25px; }
         .howto-step { display: flex; margin-bottom: 20px; }
         .step-num { background: #87ceeb; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; margin-right: 12px; flex-shrink: 0; font-size: 15px; font-weight: 700; }
@@ -96,13 +106,12 @@
             .oval-wrapper { flex-direction: column; }
             .oval-title { font-size: 14px; padding: 12px 20px; max-width: 95%; }
             .video-thumb { width: 90px; height: 60px; }
+            .video-no { width: 35px; font-size: 1em; }
         }
     </style>
     <script>
-        // ブラウザの自動スクロールを無効化する
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+        window.scrollTo(0, 0);
     </script>
 </head>
 <body>
@@ -141,7 +150,10 @@
             </div>
             <a href="#top-index" class="back-to-index">↑ 目次へ</a>
         </div>
+        <a href="#howto" class="howto-link-btn">▼ 360°動画の楽しみ方はこちら</a>
     </div>
+
+    <img src="image_ccd7d4.png" alt="タイムマシンのメッセージ" class="message-card">
 
     <ul class="video-list">
         <script>
@@ -254,21 +266,38 @@
         </script>
     </ul>
 
+    <div id="howto" class="howto-box">
+        <h2>📱 360°動画の楽しみ方（スマホ・iPhone）</h2>
+        <p style="margin-bottom:25px; font-size:15px; color:#666;">
+            このサイトの動画は、会場をぐるりと見渡せる360度カメラで撮影されています。<br>
+            まるでその場にいるような臨場感をお楽しみください。
+        </p>
+        <div class="howto-step">
+            <div class="step-num">1</div>
+            <div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。（ブラウザで開いた場合は、アプリで開くように選択してください）</div>
+        </div>
+        <div class="howto-step">
+            <div class="step-num">2</div>
+            <div><strong>スマホを動かしてみる</strong><br>スマホを上下左右に動かすと、それに合わせて映像のアングルが変わります。<br>または、画面を指でスワイプ（なぞる）しても視点を変更できます。</div>
+        </div>
+        <div class="howto-step">
+            <div class="step-num">3</div>
+            <div><strong>画質を上げる（おすすめ）</strong><br>画面右上の歯車マーク⚙️から「画質」→「高い画質」を選ぶと、より鮮明な映像で同期会の様子を楽しめます。</div>
+        </div>
+        <div style="text-align:center; font-size: 35px; margin-top:20px;">📲 🔄 👀</div>
+    </div>
+
     <footer><p>© 2026 桜塚高校28期 同窓会実行委員会</p></footer>
 </div>
 
 <script>
-    // 1. DOMの読み込みが始まった瞬間に一番上へ飛ばす
-    const topElement = document.getElementById('page-top');
-    if (topElement) {
-        topElement.focus();
-        window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
 
     document.addEventListener('DOMContentLoaded', function() {
-        // 2. DOM構築完了後にもう一度一番上へ飛ばす
         window.scrollTo(0, 0);
-        if (topElement) topElement.focus();
+        document.body.style.opacity = "1";
+        const topEl = document.getElementById('page-top');
+        if (topEl) topEl.focus();
 
         const a1 = document.getElementById('bgm1'), a2 = document.getElementById('bgm2');
         const b1 = document.getElementById('btn1'), b2 = document.getElementById('btn2');
@@ -290,11 +319,9 @@
         }
     });
 
-    // 3. 画像や動画など全リソースが読み込まれた最終段階でダメ押し
     window.onload = function() {
         setTimeout(function() {
             window.scrollTo(0, 0);
-            document.getElementById('page-top').focus();
         }, 50);
     };
 </script>
