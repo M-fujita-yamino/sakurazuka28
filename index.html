@@ -181,7 +181,7 @@
             <li><a href="#section1">2023年 同期会 360°動画アーカイブ</a></li>
             <li><a href="#section2">2023年 同期会 写真集</a></li>
             <li><a href="#section3">2018年 還暦同期会</a></li>
-            <li><a href="#section4">特別付録（資料・吹奏楽）</a></li>
+            <li><a href="#section4">特別付録（資料アーカイブ）</a></li>
         </ul>
     </nav>
 
@@ -286,7 +286,7 @@
 
     <div id="section4" class="section-header">
         <div class="oval-wrapper">
-            <div class="oval-title">特別付録：資料アーカイブ・吹奏楽</div>
+            <div class="oval-title">特別付録：資料アーカイブ</div>
             <a href="#top-index" class="back-to-index">↑ 目次へ</a>
         </div>
     </div>
@@ -299,12 +299,10 @@
                 {no:"03d", title:"1年～3年のクラス名簿", url:"https://photos.google.com/share/AF1QipOxk3cmfyjzpaZO-8M6za-SinsS6aB43S2b7c1P-eyuMp9xdw2pjygVyqE7CqYwAQ?key=VXVnOUQwZEJweTZjanBBaVg1NlltVUJDTzdQMzVR"},
                 {no:"03e", title:"伊丹君作成・旧校舎復元図", url:"https://photos.google.com/share/AF1QipMgEp4Wg8RWwdfI6dPeeXkAd5sZchJAnhimAzf-1uN3Y1kj0TrEFRKHbYWO7DGWxw?key=R01hTVBsOE50T3pHbGtVN0dvcDl3YjVaR29qTE5B"},
                 {no:"03f", title:"桜塚高校の写真今昔 52枚", url:"https://photos.google.com/share/AF1QipNo1u_GJM2kfGJHfMMH6TIWjDE-dKTN_lRwGvbYiQwhA25vGCtayJMWEulYC5zbHA?key=V21IbnNzdGNYRjZGZ2xCQVM4dXZQNUw2a3VPTUF3"},
-                {no:"03g", title:"【動画 桜塚高校の歴史】", url:"https://photos.google.com/share/AF1QipO5cOi_QfPmECzO0Qc58xj8W_mKTqKU-sQ_du7_8Jax259Yc__KTIHgq0H1bh7TuQ?key=WVdLb2tPbmU3enc2SkhfX3NXWWhPQlZFQ3VpR2hn"},
-                {no:"付録1", title:"吹奏楽部 第四回定期演奏会", url:"https://www.youtube.com/watch?v=gJc4AqP4FBo"},
-                {no:"付録2", title:"吹奏楽 宇宙戦艦ヤマト", url:"https://www.youtube.com/watch?v=nNIHJYlDt_k"}
+                {no:"03g", title:"【動画 桜塚高校の歴史】", url:"https://photos.google.com/share/AF1QipO5cOi_QfPmECzO0Qc58xj8W_mKTqKU-sQ_du7_8Jax259Yc__KTIHgq0H1bh7TuQ?key=WVdLb2tPbmU3enc2SkhfX3NXWWhPQlZFQ3VpR2hn"}
             ];
             v4.forEach(v => {
-                const img = v.no.includes('付録') ? `thumb_ex${v.no.slice(-1)}.jpg` : `特別付録「${v.title}」.jpg`;
+                const img = `特別付録「${v.title}」.jpg`;
                 document.write(`<li class="video-item"><div class="video-thumb"><img src="${img}"></div><div class="video-no" style="font-size:0.75em">${v.no}</div><div class="video-info"><span class="video-title">${v.title}</span></div><a href="${v.url}" class="play-btn" target="_blank">閲覧</a></li>`);
             });
         </script>
@@ -336,6 +334,9 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // ページ読み込み時に一番上へスクロールさせる
+        window.scrollTo(0, 0);
+
         const a1 = document.getElementById('bgm1'), a2 = document.getElementById('bgm2');
         const b1 = document.getElementById('btn1'), b2 = document.getElementById('btn2');
         function play(t, tb, o, ob) {
