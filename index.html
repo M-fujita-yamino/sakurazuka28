@@ -36,18 +36,13 @@
         }
         .header-title { color: #ffffff; font-size: 2.4em; margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: 0.08em; }
 
-        /* タイムマシンメッセージのスタイル */
+        /* ★控えめなタイムマシンメッセージのデザイン★ */
         .time-machine-msg {
-            margin: 0 auto 40px auto; padding: 30px 20px; max-width: 90%;
-            background: #fff; border: 2px solid #ffcad4; border-radius: 20px;
-            text-align: center; position: relative; box-shadow: 0 4px 10px rgba(255, 202, 212, 0.2);
+            margin: 0 auto 30px auto; padding: 10px; max-width: 90%;
+            text-align: center; color: #888;
         }
-        .time-machine-msg::before {
-            content: "🌸"; position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
-            background: #fff; padding: 0 10px; font-size: 24px;
-        }
-        .msg-icons { font-size: 24px; margin-bottom: 15px; letter-spacing: 10px; }
-        .msg-text { font-weight: 700; color: #666; font-size: 16px; line-height: 2; }
+        .msg-icons { font-size: 18px; margin-bottom: 8px; letter-spacing: 5px; opacity: 0.7; }
+        .msg-text { font-size: 13px; font-weight: 400; line-height: 1.6; }
 
         .contents-index {
             margin: 10px auto 40px auto; padding: 25px; max-width: 90%;
@@ -75,6 +70,7 @@
         .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
         .video-no { font-weight: 700; color: #d65f82; font-size: 1.2em; width: 45px; text-align: center; }
         .video-info { flex-grow: 1; }
+        .video-time { font-size: 0.8em; color: #888; display: block; }
         .video-title { font-weight: 700; font-size: 1em; color: #333; }
         .play-btn { display: inline-block; background-color: #ff8da1; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; font-weight: 700; font-size: 12px; }
 
@@ -122,8 +118,7 @@
         <div class="msg-icons">🌸 🥂 😄 🍴 📷</div>
         <div class="msg-text">
             再生ボタンは、あの日の会場に戻るタイムマシンの入り口です。<br>
-            360°の動画であらゆる角度であの日の笑顔がよみがえります。<br>
-            ぜひお楽しみください。
+            360°の動画であらゆる角度であの日の笑顔がよみがえります。ぜひお楽しみください。
         </div>
     </div>
 
@@ -153,7 +148,7 @@
                 {no:"21", title:"二次会場1", time:"16:26〜", url:"https://www.youtube.com/watch?v=hbPB4Rtb038"}
             ];
             v1.forEach(v => {
-                document.write(`<li class="video-item"><div class="video-thumb"><img src="thumb_${v.no}.jpg"></div><div class="video-no">${v.no}</div><div class="video-info"><span style="font-size:0.8em;color:#888;">${v.time}</span><br><span class="video-title">${v.title}</span></div><a href="${v.url}" class="play-btn" target="_blank">再生</a></li>`);
+                document.write(`<li class="video-item"><div class="video-thumb"><img src="thumb_${v.no}.jpg"></div><div class="video-no">${v.no}</div><div class="video-info"><span class="video-time">${v.time}</span><span class="video-title">${v.title}</span></div><a href="${v.url}" class="play-btn" target="_blank">再生</a></li>`);
             });
         </script>
     </ul>
@@ -192,26 +187,23 @@
 
     <div id="howto" class="howto-box">
         <h2>📱 360°動画の楽しみ方（スマホ・iPhone）</h2>
-        <div class="howto-step"><div class="step-num">1</div><div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。（ブラウザで開いた場合は、アプリで開くように選択してください）</div></div>
-        <div class="howto-step"><div class="step-num">2</div><div><strong>スマホを動かしてみる</strong><br>スマホを上下左右に動かすと、視点が変わります。指でスワイプしても変更可能です。</div></div>
-        <div class="howto-step"><div class="step-num">3</div><div><strong>画質を上げる（おすすめ）</strong><br>設定（⚙️）から「画質」→「高い画質」を選ぶと鮮明になります。</div></div>
+        <div class="howto-step"><div class="step-num">1</div><div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。</div></div>
+        <div class="howto-step"><div class="step-num">2</div><div><strong>スマホを動かしてみる</strong><br>スマホを動かすと、視点が変わります。</div></div>
+        <div class="howto-step"><div class="step-num">3</div><div><strong>画質を上げる</strong><br>設定から「画質」→「高い画質」を選んでください。</div></div>
     </div>
 
     <footer><p>© 2026 桜塚高校28期 同窓会実行委員会</p></footer>
 </div>
 
 <script>
-    // ブラウザのスクロール復元を完全に停止し、トップへ固定
     if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
     window.scrollTo(0, 0);
 
     document.addEventListener('DOMContentLoaded', function() {
         window.scrollTo(0, 0);
-        // DOM構築の50ミリ秒後に表示を開始（ガタつき防止）
         setTimeout(() => {
             window.scrollTo(0, 0);
             document.body.style.opacity = "1";
-            document.getElementById('page-top').focus();
         }, 50);
     });
 
