@@ -156,6 +156,12 @@
             .video-no { width: 35px; font-size: 1em; }
         }
     </style>
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual'; // ブラウザの自動スクロール復元を無効化
+        }
+        window.scrollTo(0, 0); // 即座に一番上へ
+    </script>
 </head>
 <body>
 
@@ -334,7 +340,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ページ読み込み時に一番上へスクロールさせる
+        // 念のため再実行
         window.scrollTo(0, 0);
 
         const a1 = document.getElementById('bgm1'), a2 = document.getElementById('bgm2');
@@ -356,6 +362,13 @@
             document.body.appendChild(p);
         }
     });
+
+    // 完全に読み込み終わった直後にもリセットをかける
+    window.onload = function() {
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 10);
+    };
 </script>
 </body>
 </html>
