@@ -6,8 +6,7 @@
     <title>桜塚高校第28期同期会ページ</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 読み込み完了まで非表示にしてジャンプを防ぐ */
-        body { opacity: 0; }
+        body { opacity: 0; transition: opacity 0.5s; }
         html { scroll-behavior: auto !important; }
 
         body {
@@ -18,43 +17,50 @@
             color: #555; margin: 0; padding: 0; line-height: 1.8; padding-bottom: 80px; overflow-x: hidden;
         }
 
+        /* 🌸 桜吹雪アニメーション */
+        .sakura-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+        }
+        .sakura-petal {
+            position: absolute; background-color: #ffc0cb; border-radius: 150% 0 150% 0;
+            animation: sakura-fall linear forwards;
+        }
+        @keyframes sakura-fall {
+            0% { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
+            100% { transform: translate(150px, 110vh) rotate(720deg); opacity: 0; }
+        }
+
         .container {
-            position: relative; z-index: 10; box-sizing: border-box; 
+            position: relative; z-index: 100; box-sizing: border-box; 
             max-width: 720px; margin: 0 auto; background-color: rgba(255, 255, 255, 0.96);
             padding: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); min-height: 100vh; backdrop-filter: blur(2px);
         }
 
-        /* 背景動画 */
         .side-img { position: fixed; z-index: 0; pointer-events: none; width: calc(50vw - 360px); height: auto; }
         .img-left { top: 0; left: 0; }
         .img-right { bottom: 0; right: 0; }
 
-        /* 北内孝子さんクレジット */
         .bg-credit {
-            position: fixed; z-index: 20; bottom: 20px;
+            position: fixed; z-index: 200; bottom: 20px;
             background: rgba(165, 29, 77, 0.7); color: #fff;
             padding: 5px 15px; font-size: 11px; font-weight: 700;
             letter-spacing: 0.1em; border-radius: 4px; pointer-events: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .bg-credit-left { left: 20px; }
         .bg-credit-right { right: 20px; }
 
-        @media (max-width: 800px) { 
-            .side-img { display: none; } 
-            .bg-credit { bottom: 10px; font-size: 9px; padding: 3px 8px; opacity: 0.8; }
-            .bg-credit-left { left: 10px; }
-            .bg-credit-right { right: 10px; }
-        }
+        @media (max-width: 800px) { .side-img, .bg-credit { display: none; } }
 
         header { 
-            position: relative; text-align: center; padding: 45px 15px; margin: -20px -20px 30px -20px;
+            text-align: center; padding: 45px 15px; margin: -20px -20px 30px -20px;
             background-color: #a51d4d; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
             display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
-        .header-title { color: #ffffff; font-size: 2.4em; margin: 0; line-height: 1.3; font-weight: 700; letter-spacing: 0.08em; }
+        .header-title { color: #ffffff; font-size: 2.4em; margin: 0; font-weight: 700; letter-spacing: 0.08em; }
 
-        /* 音楽ボタン */
         .music-controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         .music-btn {
             background: rgba(255, 255, 255, 0.2); border: 2px solid #fff; color: #fff;
@@ -63,7 +69,20 @@
         }
         .music-btn.playing { background: #ff8da1; border-color: #ff8da1; box-shadow: 0 0 10px rgba(255,141,161,0.5); }
 
-        /* セクション見出し */
+        .contents-index { margin: 10px auto 40px auto; padding: 25px; max-width: 90%; background: #fff; border: 2px dashed #ffb7c5; border-radius: 25px; text-align: left; }
+        .contents-index h2 { font-size: 18px; color: #d65f82; border-bottom: 2px solid #ffeef5; margin-top: 0; }
+        .contents-index ul { list-style: none; padding: 0; }
+        .contents-index li { margin-bottom: 8px; }
+        .contents-index a { color: #555; text-decoration: none; font-size: 15px; font-weight: 700; display: inline-block; }
+        .contents-index a::before { content: "🌸 "; }
+
+        .neon-new {
+            display: inline-block; margin-left: 10px; font-size: 12px; font-weight: bold; color: #fff;
+            background: #ff00de; padding: 1px 6px; border-radius: 4px;
+            text-shadow: 0 0 5px #fff; animation: blink 1.5s infinite alternate;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
         .section-header { text-align: center; margin: 60px 0 30px 0; display: flex; flex-direction: column; align-items: center; gap: 15px; scroll-margin-top: 20px; }
         .oval-title {
             display: inline-block; padding: 15px 30px; border: 2px solid #ffb7c5;
@@ -74,7 +93,37 @@
         .back-to-index:hover { background-color: #ffb7c5; color: #fff; }
         .howto-link-btn { font-size: 14px; color: #d65f82; text-decoration: underline; font-weight: 700; }
 
-        /* 動画・写真リスト */
+        /* 検索ボックススタイル */
+        .search-area {
+            background: #fff; padding: 25px; border-radius: 20px;
+            border: 2px solid #ffb7c5; margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .search-box {
+            padding: 12px 15px; border: 1px solid #ccc;
+            border-radius: 30px; font-size: 16px; box-sizing: border-box;
+            background-color: #fffafa; transition: border-color 0.3s;
+        }
+        .search-box:focus { outline: none; border-color: #ff8da1; background-color: #fff; }
+        
+        .search-result { margin-top: 20px; }
+        .result-item {
+            background: #fdfdfd; padding: 15px; margin-bottom: 12px;
+            border-radius: 12px; border: 1px solid #eee; border-left: 6px solid #87ceeb;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .result-name { font-weight: 700; font-size: 1.2em; color: #333; margin-bottom: 10px; display: block; }
+        
+        .class-btn-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .class-btn {
+            background: #87ceeb; color: white; text-decoration: none;
+            padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 5px;
+            transition: all 0.2s;
+        }
+        .class-btn:hover { background: #5dafcf; transform: translateY(-1px); }
+        .class-btn::before { content: "📸"; font-size: 1.1em; }
+
         .video-list { list-style: none; padding: 0; margin-bottom: 45px; }
         .video-item {
             display: flex; align-items: center; background: #fff; margin-bottom: 12px;
@@ -86,37 +135,20 @@
         .video-no { font-weight: 700; color: #d65f82; font-size: 1.2em; width: 45px; text-align: center; }
         .video-info { flex-grow: 1; }
         .video-title { font-weight: 700; font-size: 1em; color: #333; }
-        
-        /* クレジットタグ */
         .creator-tag { font-size: 0.75em; color: #a51d4d; background: #ffeef5; padding: 2px 10px; border-radius: 10px; margin-top: 5px; display: inline-block; font-weight: 700; border: 1px solid rgba(165,29,77,0.2); }
-        
         .play-btn { display: inline-block; background-color: #ff8da1; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; font-weight: 700; font-size: 12px; }
 
-        /* 360°動画楽しみ方ボックス */
-        .howto-box { background-color: rgba(253, 253, 253, 0.95); border: 2px solid #ffeef5; border-radius: 20px; padding: 30px; margin-top: 30px; margin-bottom: 60px; text-align: left; scroll-margin-top: 20px; }
+        .howto-box { background-color: rgba(253, 253, 253, 0.95); border: 2px solid #ffeef5; border-radius: 20px; padding: 30px; margin-top: 30px; margin-bottom: 60px; text-align: left; }
         .howto-box h2 { font-size: 20px; color: #555; border-left: 6px solid #87ceeb; padding-left: 12px; margin-bottom: 25px; margin-top: 0; }
         .howto-step { display: flex; margin-bottom: 20px; }
         .step-num { background: #87ceeb; color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-block; text-align: center; line-height: 28px; margin-right: 12px; font-weight: 700; flex-shrink: 0; }
-
-        /* 目次 */
-        .contents-index { margin: 10px auto 40px auto; padding: 25px; max-width: 90%; background: #fff; border: 2px dashed #ffb7c5; border-radius: 25px; }
-        .contents-index h2 { font-size: 18px; color: #d65f82; border-bottom: 2px solid #ffeef5; margin-top: 0; }
-        .contents-index ul { list-style: none; padding: 0; }
-        .contents-index li { margin-bottom: 8px; }
-        .contents-index a { color: #555; text-decoration: none; font-size: 15px; font-weight: 700; }
-        .contents-index a::before { content: "🌸 "; }
-
-        .neon-new {
-            display: inline-block; margin-left: 10px; font-size: 12px; font-weight: bold; color: #fff;
-            background: #ff00de; padding: 1px 6px; border-radius: 4px;
-            text-shadow: 0 0 5px #fff; animation: blink 1.5s infinite alternate;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
         footer { text-align: center; margin-top: 70px; font-size: 12px; color: #999; }
     </style>
 </head>
 <body>
+
+<div id="sakura-container" class="sakura-container"></div>
 
 <audio id="audio_okamachi" loop src="岡町商店街の唄.mp3"></audio>
 <audio id="audio_kouka" loop src="桜塚校歌.mp3"></audio>
@@ -184,7 +216,6 @@
         </div>
         <a href="#howto" class="howto-link-btn">▼ 360°動画の楽しみ方はこちら</a>
     </div>
-
     <ul class="video-list">
         <script>
             const v1 = [
@@ -217,22 +248,10 @@
     </ul>
 
     <div id="howto" class="howto-box">
-        <h2>📱 360°動画の楽しみ方（スマホ・iPhone）</h2>
-        <p style="margin-bottom:25px; font-size:15px; color:#666;">
-            このサイトの動画は、会場をぐるりと見渡せる360度カメラで撮影されています。まるでその場にいるような臨場感をお楽しみください。
-        </p>
-        <div class="howto-step">
-            <div class="step-num">1</div>
-            <div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。（ブラウザで開いた場合は、アプリで開くように選択してください）</div>
-        </div>
-        <div class="howto-step">
-            <div class="step-num">2</div>
-            <div><strong>スマホを動かしてみる</strong><br>スマホを上下左右に動かすと、それに合わせて映像のアングルが変わります。<br>または、画面を指でスワイプ（なぞる）しても視点を変更できます。</div>
-        </div>
-        <div class="howto-step">
-            <div class="step-num">3</div>
-            <div><strong>画質を上げる（おすすめ）</strong><br>画面右上の歯車マーク⚙️から「画質」→「高い画質」を選ぶと、より鮮明な映像で同期会の様子を楽しめます。</div>
-        </div>
+        <h2>📱 360°動画の楽しみ方</h2>
+        <div class="howto-step"><div class="step-num">1</div><div><strong>「再生」ボタンを押す</strong><br>YouTubeアプリが起動します。</div></div>
+        <div class="howto-step"><div class="step-num">2</div><div><strong>スマホを動かしてみる</strong><br>スマホの動きに合わせて映像のアングルが変わります。</div></div>
+        <div class="howto-step"><div class="step-num">3</div><div><strong>画質を上げる</strong><br>⚙️マークから「画質」→「高い画質」を選んでください。</div></div>
     </div>
 
     <div id="section_vol8_photo" class="section-header">
@@ -253,6 +272,42 @@
             <a href="#top-index" class="back-to-index">↑ 目次へ</a>
         </div>
     </div>
+
+    <div class="search-area">
+        <h3 style="color:#d65f82; margin-top:0; border-bottom:1px dashed #ffb7c5; padding-bottom:10px;">
+            🔍 同期生クラス・写真検索
+            <span style="font-size:0.7em; color:#888; font-weight:normal; display:block; margin-top:5px;">Coming Soon（近日実装予定）<br>※現在は1年のクラスと名前検索のみ仮運用可能です</span>
+        </h3>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap:wrap;">
+            <select id="classSelect" class="search-box" style="width: 35%; min-width: 120px; cursor: pointer;">
+                <option value="">全クラス</option>
+                <optgroup label="1年">
+                    <option value="1-1">1年1組</option><option value="1-2">1年2組</option><option value="1-3">1年3組</option>
+                    <option value="1-4">1年4組</option><option value="1-5">1年5組</option><option value="1-6">1年6組</option>
+                    <option value="1-7">1年7組</option><option value="1-8">1年8組</option><option value="1-9">1年9組</option>
+                    <option value="1-10">1年10組</option>
+                </optgroup>
+                <optgroup label="2年">
+                    <option value="2-1">2年1組</option><option value="2-2">2年2組</option><option value="2-3">2年3組</option>
+                    <option value="2-4">2年4組</option><option value="2-5">2年5組</option><option value="2-6">2年6組</option>
+                    <option value="2-7">2年7組</option><option value="2-8">2年8組</option><option value="2-9">2年9組</option>
+                    <option value="2-10">2年10組</option>
+                </optgroup>
+                <optgroup label="3年">
+                    <option value="3-1">3年1組</option><option value="3-2">3年2組</option><option value="3-3">3年3組</option>
+                    <option value="3-4">3年4組</option><option value="3-5">3年5組</option><option value="3-6">3年6組</option>
+                    <option value="3-7">3年7組</option><option value="3-8">3年8組</option><option value="3-9">3年9組</option>
+                    <option value="3-10">3年10組</option>
+                </optgroup>
+            </select>
+
+            <input type="text" id="searchInput" class="search-box" style="flex:1;" placeholder="名前やフリガナを入力...">
+        </div>
+        
+        <div id="searchResult" class="search-result"></div>
+    </div>
+
     <ul class="video-list">
         <script>
             const v4 = [
@@ -273,7 +328,27 @@
     <footer><p>© 2026 桜塚高校28期 同窓会実行委員会</p></footer>
 </div>
 
+<script src="member_data.js"></script>
+
 <script>
+    // 🌸 桜吹雪アニメーション
+    const container = document.getElementById('sakura-container');
+    function createSakura() {
+        const petal = document.createElement('div');
+        petal.className = 'sakura-petal';
+        const size = Math.random() * 10 + 8;
+        petal.style.width = size + 'px';
+        petal.style.height = size + 'px';
+        petal.style.left = Math.random() * 120 - 10 + 'vw';
+        const duration = Math.random() * 4 + 6;
+        petal.style.animationDuration = duration + 's';
+        petal.style.opacity = Math.random() * 0.4 + 0.4;
+        container.appendChild(petal);
+        setTimeout(() => { petal.remove(); }, duration * 1000);
+    }
+    setInterval(createSakura, 150);
+
+    // 🎵 音楽再生制御
     const audios = { okamachi: document.getElementById('audio_okamachi'), kouka: document.getElementById('audio_kouka') };
     const btns = { okamachi: document.getElementById('btn_okamachi'), kouka: document.getElementById('btn_kouka') };
 
@@ -281,17 +356,92 @@
         const target = audios[type];
         const other = audios[type === 'okamachi' ? 'kouka' : 'okamachi'];
         const otherBtn = btns[type === 'okamachi' ? 'kouka' : 'okamachi'];
+        if (!target.paused) { target.pause(); btns[type].classList.remove('playing'); }
+        else { other.pause(); otherBtn.classList.remove('playing'); target.play().catch(e => console.log(e)); btns[type].classList.add('playing'); }
+    }
 
-        if (!target.paused) {
-            target.pause();
-            btns[type].classList.remove('playing');
+    // ==========================================
+    // 🔍 検索機能（クラス選択 + 名前検索）
+    // ==========================================
+    
+    const classSelect = document.getElementById('classSelect');
+    const searchInput = document.getElementById('searchInput');
+    const searchResult = document.getElementById('searchResult');
+
+    function performSearch() {
+        const selectedClass = classSelect.value; // 選ばれたクラス (例: "1-1")
+        const query = searchInput.value.replace(/\s+/g, ''); // 名前検索ワード
+
+        searchResult.innerHTML = '';
+
+        // 条件なし（初期状態）なら案内を表示
+        if (!selectedClass && !query) {
+            searchResult.innerHTML = '<div style="color:#999; padding:10px;">クラスを選択するか、名前を入力してください</div>';
+            return;
+        }
+
+        if (typeof memberData === 'undefined') {
+            searchResult.innerHTML = '<div style="color:red; padding:10px;">データ読込エラー<br>member_data.jsが見つかりません</div>';
+            return;
+        }
+
+        const filtered = memberData.filter(m => {
+            // 1. クラス条件チェック
+            let classMatch = true;
+            if (selectedClass) {
+                // 1年、2年、3年のいずれかのカラムに該当クラスがあるか
+                classMatch = (m.c1 === selectedClass || m.c2 === selectedClass || m.c3 === selectedClass);
+            }
+
+            // 2. 名前条件チェック
+            let nameMatch = true;
+            if (query) {
+                const cleanName = m.name.replace(/\s+/g, '');
+                const cleanKana = m.kana.replace(/\s+/g, '');
+                nameMatch = cleanName.includes(query) || cleanKana.includes(query);
+            }
+
+            return classMatch && nameMatch;
+        });
+
+        if (filtered.length === 0) {
+            searchResult.innerHTML = '<div style="color:#999; padding:10px;">該当する方は見つかりませんでした</div>';
         } else {
-            other.pause();
-            otherBtn.classList.remove('playing');
-            target.play().catch(e => console.log("Play blocked", e));
-            btns[type].classList.add('playing');
+            // 件数表示
+            const countDiv = document.createElement('div');
+            countDiv.style.cssText = "font-size:12px; color:#d65f82; margin-bottom:10px; font-weight:bold;";
+            countDiv.textContent = `該当: ${filtered.length}名`;
+            searchResult.appendChild(countDiv);
+
+            filtered.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                
+                let buttonsHtml = '<div class="class-btn-container">';
+                if(m.link1 && m.link1.startsWith('http')) buttonsHtml += `<a href="${m.link1}" class="class-btn" target="_blank">1年 ${m.c1}</a>`;
+                if(m.link2 && m.link2.startsWith('http')) buttonsHtml += `<a href="${m.link2}" class="class-btn" target="_blank">2年 ${m.c2}</a>`;
+                if(m.link3 && m.link3.startsWith('http')) buttonsHtml += `<a href="${m.link3}" class="class-btn" target="_blank">3年 ${m.c3}</a>`;
+                buttonsHtml += '</div>';
+
+                const subject = encodeURIComponent(`【名簿訂正依頼】${m.name}さんについて`);
+                const body = encodeURIComponent(`管理者様\n\n以下のデータの訂正をお願いします。\n\n対象者：${m.name} (${m.kana})`);
+                const mailLink = `mailto:?subject=${subject}&body=${body}`;
+                const fixBtn = `<a href="${mailLink}" style="font-size:11px; color:#888; text-decoration:underline; margin-left:10px;">⚠️ 訂正依頼</a>`;
+
+                div.innerHTML = `
+                    <div class="result-name">
+                        ${m.name} <span style="font-size:0.8em; color:#777;">(${m.kana})</span>
+                        ${fixBtn}
+                    </div>
+                    ${buttonsHtml}
+                `;
+                searchResult.appendChild(div);
+            });
         }
     }
+
+    classSelect.addEventListener('change', performSearch);
+    searchInput.addEventListener('input', performSearch);
 
     document.addEventListener('DOMContentLoaded', () => {
         document.body.style.opacity = "1";
