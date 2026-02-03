@@ -107,22 +107,44 @@
         .search-box:focus { outline: none; border-color: #ff8da1; background-color: #fff; }
         
         .search-result { margin-top: 20px; }
-        .result-item {
-            background: #fdfdfd; padding: 15px; margin-bottom: 12px;
-            border-radius: 12px; border: 1px solid #eee; border-left: 6px solid #87ceeb;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-        }
-        .result-name { font-weight: 700; font-size: 1.2em; color: #333; margin-bottom: 10px; display: block; }
         
-        .class-btn-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        /* ▼▼▼ コンパクト表示のためのスタイル変更 ▼▼▼ */
+        .result-item {
+            background: #fdfdfd; 
+            padding: 8px 12px; /* 余白を削減 */
+            margin-bottom: 6px; /* 下のマージンを削減 */
+            border-radius: 8px; /* 角丸を少し小さく */
+            border: 1px solid #eee; 
+            border-left: 4px solid #87ceeb; /* 左の線も少し細く */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            display: flex; /* 横並びにする */
+            align-items: center; /* 上下中央揃え */
+            justify-content: space-between; /* 両端揃え */
+            flex-wrap: wrap; /* スマホで狭いときは折り返し */
+            gap: 5px;
+        }
+        .result-name { 
+            font-weight: 700; 
+            font-size: 1.1em; /* 少し文字サイズ調整 */
+            color: #333; 
+            margin: 0; /* マージン削除 */
+            line-height: 1.2;
+        }
+        
+        /* クラスボタン */
+        .class-btn-container { display: flex; flex-wrap: wrap; gap: 5px; }
         .class-btn {
             background: #87ceeb; color: white; text-decoration: none;
-            padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
-            display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 10px; /* ボタンもコンパクトに */
+            border-radius: 15px; 
+            font-size: 11px; /* 文字サイズ小さく */
+            font-weight: 700;
+            display: inline-flex; align-items: center; gap: 3px;
             transition: all 0.2s;
         }
         .class-btn:hover { background: #5dafcf; transform: translateY(-1px); }
-        .class-btn::before { content: "📸"; font-size: 1.1em; }
+        .class-btn::before { content: "📸"; font-size: 1.0em; }
+        /* ▲▲▲ 変更ここまで ▲▲▲ */
 
         .video-list { list-style: none; padding: 0; margin-bottom: 45px; }
         .video-item {
@@ -369,12 +391,11 @@
     const searchResult = document.getElementById('searchResult');
 
     function performSearch() {
-        const selectedClass = classSelect.value; // 選ばれたクラス (例: "1-1")
-        const query = searchInput.value.replace(/\s+/g, ''); // 名前検索ワード
+        const selectedClass = classSelect.value; 
+        const query = searchInput.value.replace(/\s+/g, ''); 
 
         searchResult.innerHTML = '';
 
-        // 条件なし（初期状態）なら案内を表示
         if (!selectedClass && !query) {
             searchResult.innerHTML = '<div style="color:#999; padding:10px;">クラスを選択するか、名前を入力してください</div>';
             return;
@@ -386,14 +407,11 @@
         }
 
         const filtered = memberData.filter(m => {
-            // 1. クラス条件チェック
             let classMatch = true;
             if (selectedClass) {
-                // 1年、2年、3年のいずれかのカラムに該当クラスがあるか
                 classMatch = (m.c1 === selectedClass || m.c2 === selectedClass || m.c3 === selectedClass);
             }
 
-            // 2. 名前条件チェック
             let nameMatch = true;
             if (query) {
                 const cleanName = m.name.replace(/\s+/g, '');
@@ -407,7 +425,6 @@
         if (filtered.length === 0) {
             searchResult.innerHTML = '<div style="color:#999; padding:10px;">該当する方は見つかりませんでした</div>';
         } else {
-            // 件数表示
             const countDiv = document.createElement('div');
             countDiv.style.cssText = "font-size:12px; color:#d65f82; margin-bottom:10px; font-weight:bold;";
             countDiv.textContent = `該当: ${filtered.length}名`;
@@ -426,11 +443,11 @@
                 const subject = encodeURIComponent(`【名簿訂正依頼】${m.name}さんについて`);
                 const body = encodeURIComponent(`管理者様\n\n以下のデータの訂正をお願いします。\n\n対象者：${m.name} (${m.kana})`);
                 const mailLink = `mailto:?subject=${subject}&body=${body}`;
-                const fixBtn = `<a href="${mailLink}" style="font-size:11px; color:#888; text-decoration:underline; margin-left:10px;">⚠️ 訂正依頼</a>`;
+                const fixBtn = `<a href="${mailLink}" style="font-size:11px; color:#888; text-decoration:underline; white-space:nowrap;">⚠️ 訂正依頼</a>`;
 
                 div.innerHTML = `
-                    <div class="result-name">
-                        ${m.name} <span style="font-size:0.8em; color:#777;">(${m.kana})</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="result-name">${m.name} <span style="font-size:0.8em; color:#777;">(${m.kana})</span></span>
                         ${fixBtn}
                     </div>
                     ${buttonsHtml}
@@ -450,3 +467,4 @@
 </script>
 </body>
 </html>
+
