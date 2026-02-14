@@ -6,7 +6,7 @@
     <title>桜塚高校第28期同期会ページ</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 強力な開始位置制御：読み込み完了まで非表示にする */
+        /* 強力な開始位置制御：読み込み完了まで非表示にし、ガタつきを防ぐ */
         body { opacity: 0; transition: opacity 0.8s ease-in; }
         html { scroll-behavior: auto !important; }
 
@@ -70,6 +70,7 @@
         }
         .music-btn.playing { background: #ff8da1; border-color: #ff8da1; box-shadow: 0 0 10px rgba(255,141,161,0.5); }
 
+        /* 🌸 お知らせセクションのスタイル */
         .info-box {
             margin: 20px auto 40px auto; padding: 35px 25px; max-width: 92%; 
             background: #fffafc; border: 3px double #ffb7c5; border-radius: 25px; 
@@ -109,7 +110,6 @@
         .back-to-index:hover { background-color: #ffb7c5; color: #fff; }
         .howto-link-btn { font-size: 14px; color: #d65f82; text-decoration: underline; font-weight: 700; }
 
-        /* 検索ボックススタイル */
         .search-area {
             background: #fff; padding: 25px; border-radius: 20px;
             border: 2px solid #ffb7c5; margin-bottom: 30px;
@@ -186,40 +186,39 @@
     </header>
 
     <section class="info-box">
-        <h2 style="margin-bottom: 20px;">🌸 桜塚高校 28 期卒業50周年記念同期会 お知らせ</h2>
+        <h2>🌸 桜塚高校 28 期卒業50周年記念同期会 お知らせ</h2>
         <p style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #555; line-height: 1.8;">
-            みなさまいかがお過ごしですか。<br>
-            早速ですが下記のように同期会の開催を企画しています。ご参加お待ちしています！
+            みなさまいかがお過ごしですか。早速ですが下記のように同期会を開催を企画しています。ご参加お待ちしています！
         </p>
         
         <table class="info-table">
             <tr>
                 <th>日時</th>
-                <td><strong>2026年5月24日(日)</strong> [cite: 2]<br>12:00 ～ 14:30（受付開始 11:30） [cite: 3, 4]</td>
+                <td><strong>2026年5月24日(日)</strong><br>12:00 ～ 14:30（受付開始 11:30）</td>
             </tr>
             <tr>
                 <th>場所</th>
                 <td>
-                    <strong><a href="https://ristorantesho21.owst.jp/" target="_blank" style="color: #a51d4d; text-decoration: underline;">リストランテ翔 21</a></strong> <br>
-                    大阪梅田 OITタワー 21 階 <br>
-                    <span style="font-size: 0.85em; color: #777;">(大阪市北区茶屋町1-45 TEL: 06-6147-6269) [cite: 7]</span>
+                    <strong><a href="https://ristorantesho21.owst.jp/" target="_blank" style="color: #a51d4d; text-decoration: underline;">リストランテ翔 21</a></strong><br>
+                    大阪梅田 OITタワー 21 階<br>
+                    <span style="font-size: 0.85em; color: #777;">(大阪市北区茶屋町1-45 TEL: 06-6147-6269)</span>
                 </td>
             </tr>
             <tr>
                 <th>費用</th>
-                <td>8,000円 (当日払い) [cite: 8]</td>
+                <td>8,000円 (当日払い)</td>
             </tr>
             <tr>
                 <th>内容</th>
-                <td>飲み放題・バイキング形式 [cite: 9]</td>
+                <td>飲み放題・バイキング形式</td>
             </tr>
         </table>
 
         <div style="background: #fff; padding: 20px; border-radius: 15px; border: 1px dashed #ffb7c5; text-align: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
-            <p style="color: #a51d4d; font-weight: bold; margin: 0; font-size: 1.1em;">📮 4月20日までに返信用はがきをご投函下さい </p>
+            <p style="color: #a51d4d; font-weight: bold; margin: 0; font-size: 1.1em;">📮 4月20日までに返信用はがきをご投函下さい</p>
             <p style="font-size: 0.9em; margin-top: 15px; line-height: 1.7; color: #666;">
-                当日は幹事担当が楽しい会にすべく鋭意努力し、盛り上げたいと思います！ [cite: 11]<br>
-                お問い合わせ：<a href="mailto:antoinetterose1789@gmail.com" style="color: #d65f82; font-weight: bold; text-decoration: underline;">antoinetterose1789@gmail.com</a> [cite: 13]
+                当日は幹事担当が楽しい会にすべく鋭意努力し、盛り上げたいと思います！<br>
+                お問い合わせ：<a href="mailto:antoinetterose1789@gmail.com" style="color: #d65f82; font-weight: bold; text-decoration: underline;">antoinetterose1789@gmail.com</a>
             </p>
             <hr style="border: 0; border-top: 1px solid #ffeef5; margin: 15px 0;">
             <p style="font-size: 0.95em; color: #d65f82; font-weight: 700; margin: 0;">
@@ -319,7 +318,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         resetToTop();
-        // 50ミリ秒後にもう一度強制スクロール
         setTimeout(() => {
             resetToTop();
             document.body.style.opacity = "1";
